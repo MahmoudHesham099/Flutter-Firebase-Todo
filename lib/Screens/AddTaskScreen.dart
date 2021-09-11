@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todofirebase/models/TasksData.dart';
+
+class AddTaskScreen extends StatefulWidget {
+  @override
+  _AddTaskScreenState createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  String taskTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: ListView(
+        children: [
+          Text(
+            'Add Task',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.blue,
+            ),
+          ),
+          TextField(
+            autofocus: true,
+            onChanged: (val) {
+              taskTitle = val;
+            },
+          ),
+          SizedBox(height: 10),
+          TextButton(
+            onPressed: () {
+              if (taskTitle != null && taskTitle.isNotEmpty) {
+                Provider.of<TasksData>(context, listen: false)
+                    .addTask(taskTitle);
+                Navigator.pop(context);
+              }
+            },
+            child: Text(
+              'Add',
+              style: TextStyle(color: Colors.white),
+            ),
+            style: TextButton.styleFrom(backgroundColor: Colors.blue),
+          ),
+        ],
+      ),
+    );
+  }
+}
